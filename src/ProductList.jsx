@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
 import { addItem } from './CartSlice';
+import { useDispatch } from 'react-redux';
 
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
@@ -220,7 +221,7 @@ function ProductList({ onHomeClick }) {
         padding: '15px',
         display: 'flex',
         justifyContent: 'space-between',
-        alignIems: 'center',
+        alignItems: 'center',
         fontSize: '20px',
     }
     const styleObjUl = {
@@ -257,8 +258,10 @@ function ProductList({ onHomeClick }) {
 
     const [addedToCart, setAddedToCart] = useState({});
 
+    const dispatch = useDispatch();
+
     const handleAddToCart = (plant) => {
-        dispatchEvent(addItem(plant));
+        dispatch(addItem(plant));
         setAddedToCart((prevState) => ({
             ...prevState,
             [plant.name]: true,
@@ -295,7 +298,7 @@ function ProductList({ onHomeClick }) {
                                         <img className='product-image' src={plant.image} alt={plant.name} />
                                         <div className="product-title">{plant.name}</div>
                                         <div className="product-description">{plant.description}</div>
-                                        <div className="product-cost">${plant.cost}</div>
+                                        <div className="product-cost">{plant.cost}</div>
                                         <button className='product-button' onClick={() => handleAddToCart(plant)}>
                                             Add to Cart
                                         </button>
